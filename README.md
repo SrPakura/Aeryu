@@ -23,8 +23,8 @@
 
 ## 🚀 Instalación rápida
 
-Si no tienes conocimientos técnicos, no te preocupes:  
-En la sección **[Releases](../../releases)** encontrarás un `.zip` con dos archivos:
+Si no tienes conocimientos técnicos, (y aunque los tengas) no te preocupes:  
+En la sección **[Releases](../../releases)** encontrarás un `.zip` con todo el código, y además, dos archivos:
 
 - `primer_uso.bat` → Crea un **entorno virtual** e instala todas las dependencias.  
 - `iniciar.bat` → Ejecuta la aplicación con un simple clic.  
