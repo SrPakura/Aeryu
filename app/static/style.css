@@ -1,0 +1,387 @@
+/* app/static/style.css */
+
+/*
+    -----------------------------------------------------
+    LA LISTA DE LA COMPRA DE NUESTRO DISEÑO (Variables)
+    -----------------------------------------------------
+    Aquí definimos todos los colores, tamaños y velocidades
+    en un solo sitio. Si mañana quieres que la barra lateral
+    sea más ancha o cambiar el color principal, solo lo
+    tocas aquí y todo se actualiza. ¡Magia!
+*/
+:root {
+    /* Variables de la estructura y elementos principales */
+    --sidebar-width: 240px;
+    --content-margin: 20px;
+
+    /* Colores base para toda la aplicación */
+    --color-background: #1a1a1a; /* Fondo principal de la app */
+    --color-sidebar: #2f2f2f; /* Fondo de la barra lateral */
+    --color-player: #595959; /* Fondo del reproductor */
+    --color-text-primary: #FFFFFF; /* Texto blanco principal */
+    --color-text-secondary: #1a1a1a; /* Texto gris secundario */
+    --color-active-bg: rgba(110, 110, 110, 0.25); /* Fondo para elementos activos en la sidebar */
+    --color-discord: #5865F2; /* Color específico de Discord */
+
+    --border-radius-main: 30px; /* Radio de borde principal (ej. sidebar, player) */
+    --border-radius-secondary: 15px; /* Radio de borde secundario */
+    
+    --transition-speed: 0.2s; /* Velocidad de transición general */
+
+    /* Variables adicionales de 'songs.css' para consistencia global */
+    --bg-dark: #1A1A1A; /* Usado como fondo de la vista songs */
+    --bg-medium: #2A2A2A; /* Usado para paneles y modales */
+    --bg-light: #3A3A3A; /* Usado para cards y elementos interactivos */
+    --bg-accent-dark: #202020; /* Color más oscuro para inputs dentro de bg-medium */
+    --accent-color: #8C00FF; /* Morado principal para botones e iconos */
+    --accent-color-darker: #7a00d9; /* Morado para hover */
+    --delete-color: #ff5555; /* Rojo para eliminar */
+    --hover-overlay: rgba(0, 0, 0, 0.6); /* Overlay oscuro para hover en portadas */
+    --border-radius-card: 12px; /* Bordes para tarjetas */
+    --border-radius-button: 8px; /* Bordes para botones pequeños y medianos */
+    --font-family-primary: 'Arial', sans-serif; /* Puedes cambiar por tu fuente preferida */
+}
+
+/*
+    -------------------------------------------
+    RESETEO GENERAL Y ESTILOS BASE
+    -------------------------------------------
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-background);
+    font-family: var(--font-family-primary); /* Usar la variable global */
+    color: var(--color-text-primary);
+    overflow: hidden; /* Evita scroll no deseado en el body */
+}
+
+/*
+    -------------------------------------------
+    LA ESTRUCTURA PRINCIPAL DE LA APP (CSS Grid)
+    -------------------------------------------
+*/
+.app-container {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr; /* Sidebar fija + contenido flexible */
+    height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+}
+
+/*
+    -------------------------------------------
+    EL ÁREA DONDE APARECERÁ EL CONTENIDO DINÁMICO
+    -------------------------------------------
+*/
+#content-area {
+    padding: var(--content-margin);
+    overflow-y: auto; /* IMPORTANTE: Scroll vertical SOLO AQUÍ */
+    /* Asegurarse de que el color de fondo sea coherente, aunque songs.css lo defina */
+    background-color: var(--bg-dark); 
+}
+
+/* Scrollbar para #content-area */
+#content-area::-webkit-scrollbar {
+    width: 8px;
+}
+#content-area::-webkit-scrollbar-track {
+    background: var(--bg-dark); /* Color de la pista del scrollbar */
+    border-radius: 10px;
+}
+#content-area::-webkit-scrollbar-thumb {
+    background: #555; /* Color del "pulgar" del scrollbar */
+    border-radius: 10px;
+}
+#content-area::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+
+/*
+    -------------------------------------------
+    LA BARRA LATERAL (ASIDE)
+    -------------------------------------------
+*/
+.sidebar {
+    background-color: var(--color-sidebar);
+    padding: var(--content-margin) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+/*
+    -------------------------------------------
+    LOS ICONOS DE NAVEGACIÓN
+    -------------------------------------------
+*/
+.main-nav, .settings-nav {
+    width: 100%;
+}
+
+.main-nav ul, .settings-nav ul {
+    list-style: none;
+    width: 100%;
+}
+
+.main-nav li,
+.settings-nav li {
+    position: relative; 
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-nav li {
+    margin-bottom: 60px;
+}
+
+.main-nav li.active::before,
+.settings-nav li.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 90%;
+    height: 100%;
+    background-color: var(--color-active-bg);
+    border-top-right-radius: var(--border-radius-main);
+    border-bottom-right-radius: var(--border-radius-main);
+    z-index: 1; 
+}
+
+.main-nav a,
+.settings-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    color: var(--color-text-secondary);
+    position: relative;
+    z-index: 2; 
+    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.main-nav a:hover,
+.settings-nav a:hover {
+    color: var(--color-text-primary);
+    transform: scale(1.1);
+}
+
+.main-nav .icon,
+.settings-nav .icon {
+    width: 60px;
+    height: 60px;
+}
+
+/*
+    -------------------------------------------
+    EL REPRODUCTOR DE MÚSICA
+    -------------------------------------------
+*/
+.music-player {
+    width: 200px;
+    height: 530px;
+    background-color: var(--color-player);
+    border-radius: var(--border-radius-main);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.album-art-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    cursor: pointer;
+    flex-shrink: 0; 
+}
+
+.album-art {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius-secondary);
+    object-fit: cover; 
+}
+
+.play-pause-overlay {
+    position: absolute;
+    inset: 0; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: var(--border-radius-secondary);
+    opacity: 0; 
+    transition: opacity var(--transition-speed) ease;
+}
+
+.album-art-container:hover .play-pause-overlay {
+    opacity: 1; 
+}
+
+.play-pause-overlay svg {
+    width: 60px;
+    height: 60px;
+}
+.play-pause-overlay .overlay-bg {
+    fill: var(--color-background);
+    opacity: 0.9;
+}
+.play-pause-overlay .overlay-icon {
+    fill: var(--color-player);
+}
+
+.progress-bar-container {
+    width: 160px;
+    height: 10px;
+    background-color: #404040;
+    border-radius: 5px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    width: 30%;
+    height: 100%;
+    background-color: var(--color-text-primary);
+    border-radius: 5px;
+}
+
+.controls-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px 5px;
+    width: 120%; 
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.control-btn svg {
+    width: 40px;
+    height: 40px;
+}
+
+.control-btn:hover {
+    color: var(--color-text-primary);
+    transform: scale(1.1);
+}
+
+.control-btn.active {
+    color: var(--color-text-primary);
+}
+
+/* --- Estilos para el Control de Volumen --- */
+.volume-control-container {
+    position: relative; /* Hace que los hijos con "absolute" se posicionen respecto a este contenedor */
+    display: flex;      /* Flexbox para organizar el contenido */
+    justify-content: center; /* Centra horizontalmente lo que haya dentro (ej: icono de altavoz) */
+    align-items: center;     /* Centra verticalmente */
+}
+
+.volume-slider-container {
+    position: absolute; /* Se coloca de forma flotante dentro del .volume-control-container */
+    bottom: 120%;       /* Lo sitúa arriba del icono, un poco separado (120% de su altura) */
+    left: 50%;          /* Centrado horizontalmente respecto al contenedor padre */
+    transform: translateX(-50%); /* Ajusta el centrado (porque left:50% lo dejaría desfasado) */
+
+    background-color: var(--color-player); /* Color de fondo del recuadro que contiene el slider */
+    padding: 20px 20px;                /* Espacio interno: arriba/abajo 15px, lados 10px */
+    border-radius: var(--border-radius-secondary); /* Bordes redondeados */
+    
+    /* Oculto por defecto */
+    visibility: hidden; /* No es visible ni ocupa espacio */
+    opacity: 0;         /* Transparente */
+    transition: visibility 0.2s, opacity 0.2s ease; /* Transición suave al mostrarse/ocultarse */
+}
+
+/* Al pasar el ratón sobre el contenedor principal, se muestra el recuadro del slider */
+.volume-control-container:hover .volume-slider-container {
+    visibility: visible; /* Ahora es visible */
+    opacity: 1;          /* Y totalmente opaco */
+}
+
+/* Estilos para el propio slider (la barrita de volumen) */
+#volume-slider {
+    -webkit-appearance: slider-vertical; /* Fuerza la orientación vertical en Chrome/Safari */
+    appearance: slider-vertical;         /* Orientación vertical estándar (si el navegador lo soporta) */
+    width: 10px;          /* Grosor de la barrita */
+    height: 120px;       /* Altura de la barrita (lo que hace que sea más alta o baja) */
+    background: var(--bg-medium); /* Color de fondo del área del slider */
+    outline: none;       /* Quita el borde que aparece al hacer clic en algunos navegadores */
+    border-radius: 4px;  /* Bordes redondeados para suavizar */
+}
+
+/* Estilos de la pista (donde se mueve el pulgar) */
+#volume-slider::-webkit-slider-runnable-track {
+    width: 10px;                       /* Grosor de la pista */
+    background: var(--bg-medium);     /* Color de la pista */
+    border-radius: 4px;               /* Bordes redondeados */
+}
+
+/* Estilos del pulgar (la bolita que arrastras) */
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Elimina el estilo por defecto en navegadores WebKit */
+    appearance: none;         /* Elimina estilo por defecto estándar */
+    width: 18px;              /* Ancho de la bolita */
+    height: 18px;             /* Alto de la bolita */
+    background: var(--accent-color); /* Color principal (ej: azul/verde destacado) */
+    cursor: pointer;          /* Cambia el cursor a manita */
+    border-radius: 50%;       /* Hace la bolita perfectamente circular */
+    border: 2px solid var(--bg-light); /* Borde que la hace destacar sobre la pista */
+}
+
+/* Cuando pasas el ratón sobre la bolita, se oscurece */
+#volume-slider::-webkit-slider-thumb:hover {
+    background: var(--accent-color-darker);
+}
+/*
+    -------------------------------------------
+    EL BOTÓN DE AJUSTES (AL FINAL)
+    -------------------------------------------
+*/
+.settings-nav {
+    margin-top: auto;
+    padding-bottom: 20px;
+}
+
+/* --- Estilos para el Botón de Discord --- */
+
+/* Estado CONECTANDO (animación de parpadeo) */
+.control-btn#player-discord-btn.connecting {
+    animation: pulse-discord 1s infinite;
+}
+
+@keyframes pulse-discord {
+    0% {
+        color: var(--color-text-secondary);
+        transform: scale(1);
+    }
+    50% {
+        color: var(--color-discord);
+        transform: scale(1.1);
+    }
+    100% {
+        color: var(--color-text-secondary);
+        transform: scale(1);
+    }
+}
