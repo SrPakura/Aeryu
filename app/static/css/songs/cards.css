@@ -1,0 +1,164 @@
+/* --- Rejillas de Cards (Canciones y Playlists) --- */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Responsivo para cards */
+    gap: 20px;
+    /* CORRECCIÓN: Asegura que las celdas no se estiren más allá de su contenido si no hay suficiente.
+       El `align-items: start` es para si el contenedor es flex y sus elementos tienen altura flexible.
+       Aquí, con display:grid, las celdas deberían tener la altura de su contenido por defecto,
+       pero lo dejamos comentado a menos que veamos un estiramiento persistente que no sea de la card en sí. */
+    /* align-items: start; */ 
+}
+
+/* CORRECCIÓN: Evitar estiramiento vertical de las cards */
+.card {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius-card);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* La card es un flex container vertical */
+    position: relative; 
+    overflow: hidden; 
+    min-height: 220px; /* Altura mínima para que los esqueletos se vean bien */
+    justify-content: space-between; /* Empuja el texto abajo */
+    flex-grow: 0; /* IMPORTE: Evita que la card individual se estire para rellenar el espacio */
+    flex-shrink: 0; /* IMPORTE: Evita que la card se encoja */
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card img {
+    width: 100%;
+    height: 150px; /* Tamaño más grande para la portada */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.card h3 {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card p {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Hover Effect de Play --- */
+.card .play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--hover-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+    border-radius: var(--border-radius-card); /* Coincide con el de la card */
+}
+.card:hover .play-overlay {
+    opacity: 1;
+}
+.card .play-overlay svg {
+    width: 50px;
+    height: 50px;
+    color: var(--text-primary); /* Icono blanco */
+}
+
+/* --- Esqueletos de Carga --- */
+.card.skeleton {
+    background-color: #404040;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+.card.skeleton::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 150px;
+    background-color: #505050;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.card.skeleton h3, .card.skeleton p {
+    background-color: #505050;
+    height: 1.2em;
+    width: 70%;
+    margin: 0 auto 5px;
+    border-radius: 4px;
+}
+.card.skeleton p {
+    background-color: #505050;
+    height: 1em;
+    width: 50%;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+/* --- Estilos para el botón de editar en la cuadrícula --- */
+.card .card-edit-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 3; /* Por encima de la imagen y el overlay */
+    
+    /* Estilos visuales para que destaque */
+    background-color: rgba(26, 26, 26, 0.7); /* Fondo oscuro semitransparente */
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Oculto por defecto y aparece al pasar el ratón */
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover .card-edit-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.card .card-edit-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.card .card-edit-btn:hover {
+    background-color: rgba(26, 26, 26, 0.9); /* Hacemos el fondo más opaco (más oscuro) */
+    transform: scale(1.1); /* Añadimos un ligero zoom para dar feedback */
+
+.playlist-card img.playlist-cover {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.playlist-card.card h3 {
+    margin-top: auto; /* Empuja el título hacia abajo si hay imagen */
+}

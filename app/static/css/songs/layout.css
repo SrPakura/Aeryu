@@ -1,0 +1,647 @@
+/* --- Estilos Generales de la Vista --- */
+.songs-view {
+    padding: 25px;
+    font-family: var(--font-family-primary);
+    color: var(--text-primary);
+    background-color: var(--bg-dark); /* Fondo de la vista */
+    height: 100%; /* Ocupa toda la altura disponible del #content-area */
+    /* El scroll para la vista entera lo maneja #content-area (ver style.css).
+       Si lo pones aquí también, tendrías dos barras de scroll. */
+    /* overflow-y: auto; */ 
+}
+/* Estilos para la barra de scroll de .songs-view (solo si se le aplica overflow-y: auto) */
+/*
+.songs-view::-webkit-scrollbar { width: 8px; }
+.songs-view::-webkit-scrollbar-track { background: var(--bg-dark); border-radius: 10px; }
+.songs-view::-webkit-scrollbar-thumb { background: #555; border-radius: 10px; }
+.songs-view::-webkit-scrollbar-thumb:hover { background: #777; }
+*/
+
+.section-panel {
+    background-color: var(--bg-medium);
+    border-radius: var(--border-radius-main);
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.section-panel h2 {
+    font-size: 2em;
+    margin-bottom: 25px;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+/* --- Header Principal --- */
+.main-header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center; /* Centra la barra de búsqueda */
+    padding: 10px 0;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--bg-medium);
+    border-radius: var(--border-radius-main);
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 800px; /* Ancho máximo como en el diseño */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#global-song-search-input {
+    flex-grow: 1;
+    padding: 10px 0;
+    border: none;
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 1.1em;
+    outline: none;
+}
+#global-song-search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+/* CORRECCIÓN: Botón Importar MP3 en el header principal */
+.import-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    padding: 10px 15px;
+    border-radius: var(--border-radius-button);
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+    border: none;
+    flex-shrink: 0; /* IMPORTE: Evita que el botón se estire */
+    flex-grow: 0; /* IMPORTE: Asegura que no ocupe más espacio del necesario */
+}
+.import-btn:hover {
+    background-color: var(--accent-color-darker);
+}
+.import-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* --- Botones Genéricos --- */
+.primary-btn, .secondary-btn {
+    padding: 12px 25px;
+    border-radius: var(--border-radius-button);
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+.primary-btn {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+}
+.primary-btn:hover {
+    background-color: var(--accent-color-darker);
+}
+
+.secondary-btn {
+    background-color: #444; /* Un gris oscuro */
+    color: var(--text-primary);
+}
+.secondary-btn:hover {
+    background-color: #555;
+}
+
+/* Botones pequeños (se usaban en el modal, ahora no hay) */
+.primary-btn.small-btn, .secondary-btn.small-btn {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    display: flex; 
+    align-items: center;
+    gap: 5px; 
+    height: auto; 
+    line-height: normal; 
+}
+.primary-btn.small-btn svg, .secondary-btn.small-btn svg {
+    width: 18px; 
+    height: 18px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px; /* Para hacer click más fácil */
+    border-radius: 50%; /* Si son solo iconos */
+    transition: color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+}
+.icon-btn:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.icon-btn svg {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+/* --- Sección Favoritas --- */
+.favorite-songs-section .favorite-layout {
+    display: flex; /* Para alinear la cuadrícula y los botones */
+    gap: 25px;
+    align-items: center; /* Alinea verticalmente los elementos */
+}
+.favorite-songs-section .cards-grid {
+    flex-grow: 1; /* Permite que la cuadrícula ocupe el espacio disponible */
+    margin-bottom: 0; 
+}
+.favorite-songs-section .section-controls {
+    display: flex;
+    flex-direction: column; /* Botones apilados */
+    gap: 15px;
+    align-items: stretch; /* Estira los botones al ancho disponible */
+    min-width: 200px; /* Ancho fijo para los botones laterales */
+    margin: auto 0; /* CENTRA los botones verticalmente respecto al layout flex */
+}
+.favorite-songs-section .section-controls button {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+}
+
+.empty-favorite {
+    background-color: #333;
+    border: 1px dashed #666;
+    color: var(--text-secondary);
+}
+.empty-favorite .empty-cover {
+    width: 100%;
+    height: 150px;
+    background-color: #222;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.no-songs-message {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 20px;
+    font-style: italic;
+}
+
+/* ✅ AÑADE ESTO PARA AGRANDAR LOS BOTONES */
+.favorite-songs-section .section-controls button {
+    padding: 20px 20px; /* Más espacio interno */
+    font-size: 1.15em; /* Letra un poco más grande */
+}
+
+/* --- Sección Todas tus Canciones (Ahora es una sección que se abre/cierra) --- */
+.all-songs-section {
+    /* Ya tiene estilos de .section-panel y se gestiona con la clase .hidden */
+}
+
+.all-songs-section .list-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; 
+    gap: 15px;
+}
+#songs-list-search-input { /* Nueva ID para la barra de búsqueda de esta sección */
+    flex-grow: 1; /* Permite que la barra de búsqueda crezca */
+    max-width: 400px; /* Limita su ancho máximo si hay espacio */
+    padding: 10px 15px;
+    border-radius: var(--border-radius-button);
+    border: 1px solid #444;
+    background-color: var(--bg-accent-dark);
+    color: var(--text-primary);
+    font-size: 1em;
+    outline: none;
+}
+#songs-list-search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 0.95em;
+}
+
+.styled-select {
+    padding: 8px 12px;
+    border-radius: var(--border-radius-button);
+    border: 1px solid #444;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-size: 0.95em;
+    outline: none;
+    cursor: pointer;
+    appearance: none; 
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFFFFF"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 30px; 
+}
+.styled-select:hover {
+    border-color: var(--accent-color);
+}
+
+.view-mode-toggle {
+    display: flex;
+    gap: 5px;
+}
+.view-mode-toggle .icon-btn {
+    border-radius: var(--border-radius-button); 
+    background-color: #333;
+    color: var(--text-secondary);
+}
+.view-mode-toggle .icon-btn.active {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+}
+.view-mode-toggle .icon-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+}
+
+/* --- Sección Playlists --- */
+.playlist-section .playlist-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+.playlist-section .playlist-card {
+    justify-content: center; /* Centrar contenido si no hay imagen */
+    text-align: center;
+}
+
+.playlist-section .card.skeleton h3, .playlist-section .card.skeleton p {
+    margin-top: 0; /* Ajusta si no hay imagen */
+}
+
+/* --- Media Queries para responsividad --- */
+@media (max-width: 768px) {
+    .favorites-editor-layout {
+        grid-template-columns: 1fr; 
+        height: auto;
+    }
+    .modal-content.large-modal {
+        height: auto;
+        max-height: 90%;
+    }
+    .modal-actions {
+        justify-content: space-around;
+    }
+    .modal-actions .primary-btn, .modal-actions .secondary-btn {
+        flex-grow: 1;
+    }
+    .search-bar-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .import-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .favorite-songs-section .favorite-layout {
+        flex-direction: column; 
+        gap: 20px;
+    }
+    .favorite-songs-section .section-controls {
+        min-width: unset; 
+        width: 100%;
+    }
+    .all-songs-section .list-controls { /* Asegurarse de que los controles se apilen en móvil */
+        flex-direction: column;
+        align-items: stretch;
+    }
+    #songs-list-search-input { /* La barra de búsqueda de la sección ocupa el 100% en móvil */
+        max-width: none;
+        width: 100%;
+    }
+    .all-songs-section .sort-options, .all-songs-section .view-mode-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+    .all-songs-section .sort-options select {
+        flex-grow: 1;
+    }
+}
+
+/* --- Estilos para el Menú Contextual --- */
+.context-menu {
+    position: absolute; /* Importante para poder colocarlo donde queramos */
+    z-index: 1500;
+    background-color: var(--bg-light);
+    border: 1px solid #555;
+    border-radius: var(--border-radius-button);
+    padding: 8px 0;
+    min-width: 200px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.context-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.context-menu .context-menu-title {
+    padding: 8px 15px;
+    color: var(--text-secondary);
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.context-menu .playlist-item-option {
+    padding: 10px 15px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.context-menu .playlist-item-option:hover {
+    background-color: var(--accent-color);
+}
+
+/* --- Estilos para la Vista de Detalle de Playlist --- */
+
+.playlist-detail-view {
+    padding: 25px;
+}
+
+.playlist-header {
+    display: flex; /* La clave: pone los elementos en fila */
+    align-items: flex-end; /* Alinea los elementos en la parte inferior */
+    gap: 25px; /* Espacio entre la portada y el texto */
+    margin-bottom: 30px;
+    position: relative; /* Para el botón de volver */
+    margin-top: 30px; /* <-- LÍNEA AÑADIDA */
+}
+
+.back-button {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1.8em;
+    margin-bottom: 30px; /* <-- LÍNEA AÑADIDA */
+}
+.back-button:hover {
+    color: var(--text-primary);
+}
+
+#playlist-detail-cover {
+    width: 256px; /* Tamaño fijo para la portada */
+    height: 256px; /* Tamaño fijo para la portada */
+    object-fit: cover;
+    border-radius: var(--border-radius-card);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+#playlist-detail-name {
+    font-size: 8.3em;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+}
+
+.playlist-info p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    font-size: 2.8em;
+}
+
+}
+
+/* Estilos para el nuevo contenedor de búsqueda e importación */
+.search-and-import-container {
+    display: flex;
+    gap: 15px;
+    flex-grow: 1; /* Permite que ocupe el espacio disponible */
+    align-items: center;
+}
+
+#songs-list-search-input {
+    flex-grow: 1; /* Hace que la barra de búsqueda se estire */
+}
+
+.import-btn {
+    flex-shrink: 0; /* Evita que el botón se encoja */
+}
+
+/* --- Nuevos Estilos para la Sección de Playlists Rediseñada --- */
+.playlist-section-layout {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Espacio entre los botones y las tarjetas */
+}
+
+.playlist-controls-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.playlist-controls-vertical .icon-btn svg {
+    width: 32px; /* Hacemos los iconos más grandes */
+    height: 32px;
+}
+
+.horizontal-scroll {
+    display: flex; /* Cambiamos de grid a flex para el scroll */
+    overflow-x: auto; /* La magia del scroll horizontal */
+    overflow-y: hidden;
+    padding-bottom: 20px; /* Espacio para que la barra de scroll no se pegue */
+    flex-grow: 1;
+}
+
+.horizontal-scroll .card {
+    flex-shrink: 0; /* Evita que las tarjetas se encojan */
+    width: 170px; /* Ancho fijo para las tarjetas */
+}
+
+/* Estilo para la barra de scroll (opcional pero recomendado) */
+.horizontal-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+.horizontal-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+}
+.horizontal-scroll::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* --- Estilos para los modos de Playlist --- */
+.playlist-controls-vertical .icon-btn.active {
+    color: var(--accent-color);
+}
+
+.playlist-section.edit-mode-active .playlist-card {
+    cursor: copy; /* Cursor de edición */
+}
+.playlist-section.edit-mode-active .playlist-card:hover {
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+.playlist-section.delete-mode-active .playlist-card {
+    cursor: no-drop; /* Cursor de borrado */
+}
+.playlist-section.delete-mode-active .playlist-card:hover {
+    box-shadow: 0 0 15px var(--delete-color);
+}
+
+
+/* --- Estilos Definitivos para Sección de Favoritos --- */
+
+/* 1. Permitimos que la sección crezca en altura */
+.favorite-songs-section .favorite-layout {
+    align-items: stretch;
+}
+
+/* 2. Definimos el ancho de las columnas de la cuadrícula */
+#favorite-songs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* 3. La clave: Anulamos la altura fija y forzamos que la IMAGEN sea cuadrada */
+#favorite-songs-grid .card img {
+    height: auto; /* Anulamos la altura fija de 150px */
+    aspect-ratio: 1 / 1; /* Forzamos la proporción cuadrada */
+}
+
+/* 4. Quitamos la altura mínima de la tarjeta para que se ajuste a su contenido */
+#favorite-songs-grid .card {
+    min-height: auto;
+}
+
+/* 5. Mantenemos los botones grandes */
+.favorite-songs-section .section-controls button {
+    padding: 15px 25px;
+    font-size: 1.05em;
+}
+
+/* --- Ajustes visuales para la barra de controles de "Todas las canciones" --- */
+
+/* Hacemos que la barra de búsqueda ocupe el espacio disponible */
+#all-songs-list-section .search-and-import-container {
+    flex-grow: 1;
+}
+
+/* Hacemos la barra de búsqueda más ancha */
+#all-songs-list-section #songs-list-search-input {
+    max-width: 600px;
+    width: 100%; /* Hacemos que rellene su contenedor */
+}
+
+/* Creamos el contenedor para los controles de la derecha */
+.list-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Aumentamos un poco el espacio entre elementos */
+}
+
+/* Hacemos más grandes los botones y selectores */
+.list-controls-right .import-btn {
+    padding: 12px 18px;
+    font-size: 1.05em;
+}
+
+.list-controls-right .styled-select {
+    padding: 12px 15px;
+    padding-right: 35px; /* Más espacio para la flecha */
+    font-size: 1em;
+}
+
+.list-controls-right .view-mode-toggle .icon-btn {
+    padding: 12px;
+}
+
+/* Hacemos que la barra de búsqueda ocupe el espacio disponible */
+#all-songs-list-section .search-and-import-container {
+    flex-grow: 1;
+}
+
+/* Hacemos la barra de búsqueda más ancha */
+#all-songs-list-section #songs-list-search-input {
+    max-width: 600px;
+    width: 100%; /* Hacemos que rellene su contenedor */
+}
+
+/* Creamos el contenedor para los controles de la derecha */
+.list-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Hacemos más grandes los botones y selectores */
+.list-controls-right .import-btn {
+    padding: 12px 18px;
+    font-size: 1.05em;
+}
+
+.list-controls-right .styled-select {
+    padding: 12px 15px;
+    padding-right: 35px; /* Más espacio para la flecha */
+    font-size: 1em;
+}
+
+.list-controls-right .view-mode-toggle .icon-btn {
+    padding: 12px;
+}
+
+/* --- Estilos Definitivos para Tarjetas de Playlist (Sección Horizontal) --- */
+
+/* 1. Definimos el ancho de las tarjetas */
+.horizontal-scroll .card.playlist-card {
+    width: 210px;
+    min-height: auto; /* Anulamos cualquier altura mínima que pueda interferir */
+}
+
+/* 2. LA CLAVE: Anulamos la altura fija de la IMAGEN y la hacemos cuadrada */
+.horizontal-scroll .card.playlist-card .playlist-cover {
+    height: auto;
+    aspect-ratio: 3 / 4; /* Proporción de rectángulo vertical */
+}
+
+/* 3. Agrandamos los botones de control de la izquierda */
+.playlist-controls-vertical .icon-btn svg {
+    width: 40px;
+    height: 40px;
+}
+
+/* Aumentamos el tamaño del título de la playlist */
+.horizontal-scroll .card.playlist-card h3 {
+    font-size: 1.25em; /* El valor original era 1.1em */
+}
+
+/* --- Estilos para el Modo Borrado de Canciones --- */
+
+/* Cuando el botón de borrado está activo, se pone rojo */
+#delete-song-mode-btn.active {
+    color: var(--delete-color);
+    background-color: rgba(255, 85, 85, 0.1);
+}
+
+/* Cuando la sección de canciones está en modo borrado... */
+.all-songs-section.delete-mode-active .card:hover {
+    box-shadow: 0 0 15px var(--delete-color); /* ...las tarjetas brillan en rojo al pasar el ratón */
+}
+
+.all-songs-section.delete-mode-active .song-item:hover {
+    background-color: rgba(255, 85, 85, 0.2); /* ...las filas de la lista se tiñen de rojo */
+}

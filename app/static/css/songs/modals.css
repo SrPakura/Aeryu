@@ -1,0 +1,432 @@
+/* --- Modales (importación y edición de favoritas) --- */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px); 
+}
+
+.modal-content {
+    background-color: var(--bg-medium);
+    padding: 30px;
+    border-radius: var(--border-radius-main);
+    width: 500px;
+    max-width: 90%;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+.modal-content.large-modal {
+    width: 90%; 
+    max-width: 1000px; 
+    height: 80%; 
+    display: flex;
+    flex-direction: column;
+}
+
+
+.modal-content h2 {
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+.modal-content input[type="file"] {
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: var(--border-radius-secondary);
+    border: 1px solid #444;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-size: 1em;
+}
+.modal-content input[type="file"]::file-selector-button {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+.modal-content input[type="file"]::file-selector-button:hover {
+    background-color: var(--accent-color-darker);
+}
+
+.modal-content .primary-btn, .modal-content .secondary-btn {
+    width: calc(100% - 40px);
+    padding: 12px;
+    margin-top: 10px;
+}
+.modal-content .primary-btn:disabled, .modal-content .secondary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #333;
+    color: #888;
+}
+
+.modal-content .close-button {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: var(--text-secondary);
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color var(--transition-speed) ease;
+}
+.modal-content .close-button:hover,
+.modal-content .close-button:focus {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+#upload-status {
+    margin-top: 20px;
+    color: #ffcc00; 
+    font-size: 0.9em;
+}
+
+.hidden {
+    display: none !important; 
+}
+
+/* --- Rediseño Modal de Edición de Favoritas --- */
+.favorites-editor-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Resultados de búsqueda más anchos que favoritas */
+    gap: 20px;
+    height: calc(100% - 100px); /* Altura dinámica, ajusta si el h2 o botones cambian */
+    margin-top: 20px;
+}
+
+.favorites-editor-layout .search-and-results,
+.favorites-editor-layout .current-favorites-display {
+    background-color: var(--bg-accent-dark); /* Color más oscuro para los paneles internos */
+    border-radius: var(--border-radius-secondary);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.favorites-editor-layout h3 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+#favorites-search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: var(--border-radius-button);
+    border: 1px solid #444;
+    background-color: var(--bg-dark); /* Más oscuro que el panel */
+    color: var(--text-primary);
+    font-size: 1em;
+    outline: none;
+    margin-bottom: 15px;
+}
+#favorites-search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.scrollable-list {
+    flex-grow: 1;
+    overflow-y: auto; 
+    padding-right: 10px; 
+}
+.scrollable-list::-webkit-scrollbar {
+    width: 8px;
+}
+.scrollable-list::-webkit-scrollbar-track {
+    background: var(--bg-accent-dark); /* Color de fondo de la barra de scroll */
+    border-radius: 10px;
+}
+.scrollable-list::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+}
+.scrollable-list::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+.search-result-item, .favorite-slot-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius-button);
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    gap: 15px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+.search-result-item:hover, .favorite-slot-item:hover {
+    background-color: #4A4A4A;
+    transform: translateY(-2px);
+}
+
+.search-result-item img, .favorite-slot-item img, .favorite-slot img { 
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.search-result-item .info, .favorite-slot-item .info, .favorite-slot .info {
+    flex-grow: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.search-result-item .info .title, .favorite-slot-item .info .title, .favorite-slot .info .title {
+    font-weight: bold;
+    color: var(--text-primary);
+}
+.search-result-item .info .artist, .favorite-slot-item .info .artist, .favorite-slot .info .artist {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+.add-favorite-btn, .remove-favorite-btn {
+    background-color: #555;
+    color: var(--text-primary);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color var(--transition-speed) ease;
+}
+.add-favorite-btn:hover {
+    background-color: var(--accent-color);
+}
+.remove-favorite-btn { 
+    background-color: #777; 
+}
+.remove-favorite-btn:hover {
+    background-color: var(--delete-color); 
+}
+.remove-favorite-btn svg {
+    width: 18px; 
+    height: 18px;
+}
+
+
+/* Slots para las canciones favoritas (a la derecha) */
+.favorite-slots {
+    flex-grow: 1;
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+}
+
+.favorite-slot {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius-button);
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.favorite-slot.empty {
+    border: 1px dashed #666;
+    background-color: #333;
+    color: var(--text-secondary);
+    justify-content: center;
+    text-align: center;
+    font-style: italic;
+}
+.favorite-slot.empty .info {
+    text-align: center;
+}
+.favorite-slot.empty img, .favorite-slot.empty .remove-favorite-btn {
+    display: none;
+}
+
+/* Esqueletos para slots de favoritas */
+.favorite-slot.skeleton {
+    background-color: #404040;
+    animation: pulse 1.5s infinite ease-in-out;
+    height: 70px; 
+}
+.favorite-slot.skeleton img {
+    background-color: #505050;
+    display: block; 
+}
+.favorite-slot.skeleton .info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.favorite-slot.skeleton .info .title {
+    background-color: #505050;
+    height: 1.2em;
+    width: 80%;
+    border-radius: 4px;
+}
+.favorite-slot.skeleton .info .artist {
+    background-color: #505050;
+    height: 1em;
+    width: 60%;
+    border-radius: 4px;
+}
+.favorite-slot.skeleton img, .favorite-slot.skeleton .remove-favorite-btn {
+    background-color: #505050;
+}
+
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%; 
+    align-self: flex-end; 
+}
+.modal-actions .primary-btn, .modal-actions .secondary-btn {
+    width: auto; 
+    flex-grow: 0;
+}
+
+.no-results {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Estilos para la nueva cola de subida */
+.upload-queue {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: var(--bg-dark);
+    border-radius: var(--border-radius-button);
+    padding: 10px;
+    text-align: left;
+}
+
+.queue-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    font-size: 0.9em;
+    border-bottom: 1px solid var(--bg-light);
+}
+
+.queue-item:last-child {
+    border-bottom: none;
+}
+
+.queue-item-status {
+    font-weight: bold;
+}
+
+.queue-item-status.status-success {
+    color: #4CAF50; /* Verde */
+}
+
+.queue-item-status.status-error {
+    color: var(--delete-color); /* Rojo */
+}
+
+.queue-item-status.status-pending {
+    color: #ffc107; /* Ámbar */
+}
+
+/* ... (estilos de los otros modales) ... */
+
+/* --- Estilos para el Modal de Edición de Canción --- */
+#edit-song-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-secondary);
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    padding: 10px 15px;
+    border-radius: var(--border-radius-button);
+    border: 1px solid #444;
+    background-color: var(--bg-accent-dark);
+    color: var(--text-primary);
+    font-size: 1em;
+    outline: none;
+}
+
+.form-group-cover .cover-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#edit-cover-preview {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* --- Estilos para la selección de portadas en modales --- */
+.cover-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 10px;
+    background-color: var(--bg-accent-dark);
+    border-radius: var(--border-radius-button);
+    padding: 10px;
+    max-height: 200px; /* Altura máxima para la lista */
+    overflow-y: auto; /* Scroll si hay muchas portadas */
+}
+
+.cover-selection-item {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Mantiene la forma cuadrada */
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.cover-selection-item:hover {
+    transform: scale(1.05);
+}
+
+.cover-selection-item.selected {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+}
