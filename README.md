@@ -1,7 +1,15 @@
-# 🎵 Aeryu <img width="120" alt="logo" src="https://github.com/user-attachments/assets/1ccc97bc-d436-4be7-96e5-b0179866c781" />
-
-**La alternativa open-source al streaming musical comercial.**  
-Un reproductor de música **local, privado y accesible**, diseñado para ser usable incluso por personas con poca experiencia digital.
+<table>
+  <tr>
+    <td width="160">
+      <img src="https://github.com/user-attachments/assets/1ccc97bc-d436-4be7-96e5-b0179866c781" alt="Aeryu Logo" width="140"/>
+    </td>
+    <td>
+      <h1>🎵 Aeryu</h1>
+      <p><strong>La alternativa open-source al streaming musical comercial.</strong><br>
+      Un reproductor de música <strong>local, privado y accesible</strong>, diseñado para ser usable incluso por personas con poca experiencia digital.</p>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -25,15 +33,14 @@ En la sección **[Releases](../../releases)** encontrarás un `.zip` con dos arc
 
 ## 🖥️ Uso de la aplicación
 
-Aeryu está diseñado con una interfaz **minimalista e intuitiva**.  
-La app incluye cuatro pestañas principales:
+Aeryu incluye **cuatro pestañas principales** y una **barra lateral estilo iPod**:
 
 1. **Songs** → Biblioteca musical y playlists, con tus 5 canciones favoritas siempre a mano.  
-2. **Descargador** → Pega un enlace, elige calidad y descarga (sencillez radical).  
+2. **Descargador** → Pega un enlace, elige calidad y descarga.  
 3. **Recomendador (IA)** → Descubre nueva música conversando con una IA.  
 4. **Ajustes** → Configura APIs y personaliza tu experiencia.  
 
-Además, la **barra lateral estilo iPod** permite controlar la música y sincronizar sesiones en Discord.
+La **barra lateral** permite controlar reproducción, modos de escucha y sincronización en Discord.
 
 ---
 
