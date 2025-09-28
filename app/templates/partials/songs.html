@@ -1,0 +1,348 @@
+<!-- app/templates/partials/songs.html -->
+<div class="songs-view">
+    <!-- Sección de Canciones Favoritas -->
+    <section class="section-panel favorite-songs-section">
+        <h2>Las 5 canciones que más te gustan</h2>
+        <div class="favorite-layout">
+            <div id="favorite-songs-grid" class="cards-grid">
+                <!-- Los esqueletos y canciones favoritas se cargarán aquí -->
+                <div class="card skeleton"></div>
+                <div class="card skeleton"></div>
+                <div class="card skeleton"></div>
+                <div class="card skeleton"></div>
+                <div class="card skeleton"></div>
+            </div>
+            <div class="section-controls">
+                <!-- Este botón ahora alternará la visibilidad de la sección de "Todas las canciones" -->
+                <button id="view-all-songs-btn" class="secondary-btn">Ver todas las canciones</button>
+                <button id="edit-favorites-btn" class="primary-btn">Editar canciones favoritas</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Todas tus Canciones (Ahora es una sección que se abre/cierra) -->
+    <section id="all-songs-list-section" class="section-panel all-songs-section hidden">
+        <h2>Todas tus canciones</h2>
+<!-- Controles de la lista de canciones -->
+<div class="list-controls">
+
+    <!-- Izquierda: buscador -->
+    <div class="search-and-import-container">
+        <input 
+            type="text" 
+            id="songs-list-search-input" 
+            placeholder="Buscar en tu colección..." 
+            aria-label="Buscar canciones en la lista">
+    </div>
+
+    <!-- Derecha: agrupamos todo en un contenedor -->
+    <div class="list-controls-right">
+        
+<!-- Botón Añadir MP3s -->
+<button id="import-songs-btn" class="icon-btn import-btn" aria-label="Añadir MP3s">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M14 2H6c-1.1 0-1.99.9-1.99 
+                 2L4 20c0 1.1.89 2 1.99 2H18c1.1 
+                 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 
+                 9H13z"/>
+    </svg>
+    <span>Importar MP3</span>
+</button>
+
+        <!-- Opciones de orden -->
+        <div class="sort-options">
+            <label for="sort-by">Ordenar por:</label>
+            <select id="sort-by" class="styled-select">
+                <option value="title">Título</option>
+                <option value="artist">Artista</option>
+                <option value="album">Álbum</option>
+                <option value="added_at">Fecha</option>
+                <option value="duration_ms">Duración</option>
+            </select>
+            <select id="sort-order" class="styled-select">
+                <option value="asc">Ascendente</option>
+                <option value="desc">Descendente</option>
+            </select>
+        </div>
+
+<!-- Botón Activar modo borrado -->
+<button id="delete-song-mode-btn" class="icon-btn" aria-label="Activar modo borrado">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 
+                 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 
+                 1H5v2h14V4z"/>
+    </svg>
+</button>
+
+        <!-- Botones de vista -->
+        <div class="view-mode-toggle">
+            <button id="view-grid-btn" class="icon-btn active" aria-label="Ver como cuadrícula">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" 
+                          d="M3 3h7v7H3zm0 11h7v7H3zm11-11h7v7h-7zm0 
+                             11h7v7h-7z"/>
+                </svg>
+            </button>
+            <button id="view-list-btn" class="icon-btn" aria-label="Ver como lista">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" 
+                          d="M3 4h18v2H3zm0 7h18v2H3zm0 
+                             7h18v2H3z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <div id="songs-display-area" class="cards-grid">
+            <!-- Aquí se cargarán todas las canciones -->
+            <p class="no-results">Cargando canciones...</p>
+        </div>
+        <div id="song-pagination" class="pagination">
+            <button id="prev-page-btn" class="pagination-btn secondary-btn" disabled>Anterior</button>
+            <span id="current-page-info">Página 1 de 1</span>
+            <button id="next-page-btn" class="pagination-btn secondary-btn" disabled>Siguiente</button>
+        </div>
+    </section>
+
+    <!-- Sección de Listas de Reproducción (Solo diseño por ahora) -->
+
+    <section id="playlist-section" class="section-panel playlist-section">
+    <h2>Tus listas de reproducción</h2>
+    
+    <div class="playlist-section-layout">
+        <div class="playlist-controls-vertical">
+            <button id="edit-playlist-btn" class="icon-btn" aria-label="Editar lista de reproducción">
+  <svg xmlns="http://www.w3.org/2000/svg" 
+       fill="currentColor" 
+       viewBox="0 0 24 24" 
+       width="24" height="24">
+    <path d="M3 17.25V21h3.75L17.81 9.94
+             l-3.75-3.75L3 17.25zM20.71 7.04
+             c.39-.39.39-1.02 0-1.41l-2.34-2.34
+             a.996.996 0 0 0-1.41 0l-1.83 1.83
+             3.75 3.75 1.83-1.83z"/>
+  </svg>
+</button>
+
+            <button id="add-playlist-btn" class="icon-btn" aria-label="Añadir nueva lista de reproducción">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </button>
+            <button id="delete-playlist-btn" class="icon-btn" aria-label="Eliminar lista de reproducción">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            </button>
+        </div>
+        
+        <div id="playlists-grid" class="cards-grid horizontal-scroll">
+            <div class="card playlist-card skeleton"></div>
+            <div class="card playlist-card skeleton"></div>
+            <div class="card playlist-card skeleton"></div>
+            <div class="card playlist-card skeleton"></div>
+            <div class="card playlist-card skeleton"></div>
+        </div>
+    </div>
+</section>
+
+   <!-- === Sección de Estadísticas === -->
+<section class="section-panel stats-section">
+    <h2>Tus estadísticas</h2>
+
+    <div class="stats-container">
+        <!-- Columna 1: Canciones más escuchadas -->
+        <div class="stats-column">
+            <h3>Canciones más escuchadas</h3>
+            <div id="top-songs-list" class="stats-song-list">
+                <!-- Aquí se cargan dinámicamente las canciones más escuchadas -->
+                <p>Calculando...</p>
+            </div>
+        </div>
+
+        <!-- Columna 2: Tiempo que escuchas música -->
+        <div class="stats-column">
+            <h3>Tiempo que escuchas música</h3>
+
+            <!-- Botones para elegir el período de la gráfica -->
+            <div class="time-period-selector">
+                <button class="period-btn active" data-period="7d">7D</button>
+                <button class="period-btn" data-period="1m">1M</button>
+                <button class="period-btn" data-period="6m">6M</button>
+                <button class="period-btn" data-period="12m">12M</button>
+            </div>
+
+            <!-- Contenedor del gráfico -->
+            <div id="listening-time-chart-container" class="chart-container">
+                <!-- Lienzo de Chart.js -->
+                <canvas id="listening-time-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Modal para importar canciones -->
+    <div id="import-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" data-close-modal="import-modal">&times;</span>
+            <h2>Importar Nuevas Canciones</h2>
+
+            <input type="file" id="mp3-file-input" accept=".mp3" multiple>
+
+            <div id="upload-queue-container" class="upload-queue"></div>
+
+            <button id="confirm-import-btn" class="primary-btn" disabled>Subir Canciones</button>
+        </div>
+    </div>
+
+    <!-- Modal para editar canciones favoritas - REDISEÑO -->
+    <div id="edit-favorites-modal" class="modal hidden">
+        <div class="modal-content large-modal">
+            <span class="close-button" data-close-modal="edit-favorites-modal">&times;</span>
+            <h2>Editar Canciones Favoritas (Top 5)</h2>
+            <div class="favorites-editor-layout">
+                <div class="search-and-results">
+                    <input type="text" id="favorites-search-input" placeholder="Buscar canciones para añadir..." aria-label="Buscar canciones para añadir a favoritos">
+                    <div id="favorites-search-results" class="scrollable-list">
+                        <!-- Resultados de búsqueda para añadir a favoritas -->
+                        <p class="no-results">Busca una canción para añadir...</p>
+                    </div>
+                </div>
+                <div class="current-favorites-display">
+                    <h3>Favoritas Actuales:</h3>
+                    <div id="current-favorites-editor" class="scrollable-list favorite-slots">
+                        <!-- Slots para las 5 canciones favoritas -->
+                        <div class="favorite-slot skeleton"></div>
+                        <div class="favorite-slot skeleton"></div>
+                        <div class="favorite-slot skeleton"></div>
+                        <div class="favorite-slot skeleton"></div>
+                        <div class="favorite-slot skeleton"></div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="cancel-favorites-btn" class="secondary-btn" data-close-modal="edit-favorites-modal">Salir sin guardar</button>
+                        <button id="save-favorites-btn" class="primary-btn">Guardar y aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal para crear playlist -->
+<div id="create-playlist-modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-button" data-close-modal="create-playlist-modal">&times;</span>
+        <h2>Crear Nueva Playlist</h2>
+        
+        <form id="create-playlist-form">
+            <div class="form-group">
+                <label for="new-playlist-name-input">Nombre de la Playlist</label>
+                <input type="text" id="new-playlist-name-input" name="name" placeholder="Mi super playlist..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="new-playlist-cover-file">Subir portada personalizada (opcional)</label>
+                <input type="file" id="new-playlist-cover-file" name="cover" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label>O elige una portada existente</label>
+                <div id="playlist-cover-selection-grid" class="cover-grid-container">
+                    <p>Cargando portadas...</p>
+                </div>
+            </div>
+            
+            <input type="hidden" id="new-playlist-cover-id" name="cover_id">
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" data-close-modal="create-playlist-modal">Cancelar</button>
+                <button type="submit" id="confirm-create-playlist-btn" class="primary-btn">Crear Playlist</button>
+            </div>
+            <div id="playlist-creation-status" style="margin-top: 15px; color: #ffcc00;"></div>
+        </form>
+    </div>
+</div>
+
+<div id="edit-playlist-modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-button" data-close-modal="edit-playlist-modal">&times;</span>
+        <h2>Editar Playlist</h2>
+        
+        <form id="edit-playlist-form">
+            <input type="hidden" id="edit-playlist-id" name="playlist_id">
+
+            <div class="form-group">
+                <label for="edit-playlist-name-input">Nombre de la Playlist</label>
+                <input type="text" id="edit-playlist-name-input" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="edit-playlist-cover-file">Subir nueva portada (opcional)</label>
+                <input type="file" id="edit-playlist-cover-file" name="cover" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label>O elige una portada existente</label>
+                <div id="edit-playlist-cover-selection-grid" class="cover-grid-container">
+                    </div>
+            </div>
+            
+            <input type="hidden" id="edit-playlist-cover-id" name="cover_id">
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" data-close-modal="edit-playlist-modal">Cancelar</button>
+                <button type="submit" id="confirm-edit-playlist-btn" class="primary-btn">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="song-context-menu" class="context-menu hidden">
+    <ul>
+        <li class="context-menu-title">Añadir a playlist:</li>
+        <div id="context-menu-playlist-list">
+            </div>
+    </ul>
+</div>
+
+<!-- === Modal para editar metadatos === -->
+<div id="edit-song-modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-button" data-close-modal="edit-song-modal">&times;</span>
+        <h2>Editar Metadatos</h2>
+        <form id="edit-song-form">
+            <input type="hidden" id="edit-song-id" name="song_id">
+
+            <div class="form-group">
+                <label for="edit-title">Título</label>
+                <input type="text" id="edit-title" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="edit-artist">Artista</label>
+                <input type="text" id="edit-artist" name="artist">
+            </div>
+
+            <div class="form-group">
+                <label for="edit-album">Álbum</label>
+                <input type="text" id="edit-album" name="album">
+            </div>
+
+            <div class="form-group">
+                <label for="edit-year">Año</label>
+                <input type="number" id="edit-year" name="year" min="1900" max="2099">
+            </div>
+
+            <div class="form-group form-group-cover">
+                <label for="edit-cover">Portada</label>
+                <div class="cover-upload-area">
+                    <img src="" alt="Portada actual" id="edit-cover-preview">
+                    <input type="file" id="edit-cover" name="cover" accept="image/*">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" data-close-modal="edit-song-modal">Cancelar</button>
+                <button type="submit" class="primary-btn">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</div> <!-- Cierra el div.songs-view -->

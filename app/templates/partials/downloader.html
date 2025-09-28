@@ -1,0 +1,51 @@
+<!-- app/templates/partials/downloader.html -->
+
+<div class="downloader-view">
+    
+    <header class="main-header">
+        <h1>Descargar música (desde YouTube)</h1>
+    </header>
+
+    <div class="downloader-layout">
+        <section class="panel controls-panel">
+            <div class="form-group">
+                <label for="url-input">Enlaces (canción o playlist)</label>
+                <textarea id="url-input" rows="8" placeholder="Pega aquí una o varias URLs separadas por líneas..."></textarea>
+            </div>
+
+            <!-- 👇 CAMBIO: agrupamos calidad + nota en un wrapper para layout en 2 columnas -->
+            <div class="quality-info-wrapper">
+                <div class="form-group">
+                    <label>Calidad (kbps)</label>
+                    <div id="quality-selector" class="quality-selector">
+                        <button class="quality-btn" data-quality="128">128</button>
+                        <button class="quality-btn active" data-quality="192">192</button>
+                        <button class="quality-btn" data-quality="256">256</button>
+                        <button class="quality-btn" data-quality="320">320</button>
+                    </div>
+                </div>
+
+                <div class="info-note">
+                    <p>A mayor tasa de bits (kbps), mayor será el tamaño del archivo.</p>
+                    <p>El oído humano promedio apenas distingue entre 256 y 320 kbps.</p>
+                    <p>Para un equilibrio óptimo entre calidad y tamaño, se recomienda usar 192 o 256 kbps.</p>
+                </div>
+            </div>
+            <!-- ☝️ Fin del cambio estructural -->
+
+            <button id="start-download-btn" class="primary-btn large-btn">Iniciar Descarga</button>
+        </section>
+
+        <section class="panel queue-panel">
+            <div class="panel-header">
+                <h2>Cola de descargas</h2>
+                <button id="retry-failed-btn" class="secondary-btn small-btn" disabled>Reintentar fallidos</button>
+            </div>
+            <div id="download-queue" class="panel-body queue-body">
+                <div class="placeholder">
+                    <p>Aquí aparecerá el progreso de tus descargas.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

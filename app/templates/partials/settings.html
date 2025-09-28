@@ -1,0 +1,85 @@
+<div class="settings-view redesigned">
+
+    <!-- Modal secreto de Pakura -->
+    <div id="pakura-modal" class="modal hidden" role="dialog" aria-labelledby="pakura-modal-title" aria-modal="true">
+        <div class="modal-content pakura-modal-content">
+            <button class="close-button" id="close-pakura-modal" aria-label="Cerrar nota del creador">&times;</button>
+            <h1 id="pakura-modal-title">Nota del creador</h1>
+            <p>Vaya, parece que no pudiste resistirte a un botón secreto llamativo. Yo tampoco me hubiera resistido.</p>
+            <p>Me presento: soy <span class="pakura-orange">pakura</span>, o Alejandro, como prefieras llamarme. Antes de nada, quiero agradecerte por descargar la app. Me hace muchísima ilusión saber que alguien más la está usando.</p>
+            <p>Aunque mi trabajo es el diseño, me animé a dar un paso más y crear esta aplicación con ayuda de Gemini y ChatGPT. Hasta ahora solo sabía de diseño y un poco de HTML y CSS, así que gran parte del código fue un reto. Pero lo hice con cariño, no por presumir, sino porque tenía un objetivo claro: ayudar a personas como mi padre o mi tío, que adoran la música pero en lo digital van un poco perdidos (con cariño, si me estáis leyendo ❤️).</p>
+            <p>Al principio la idea era distinta: un simple reproductor de música para mi Raspberry. Pero pronto me di cuenta de que lo que realmente quería era algo accesible, fácil y cómodo para cualquiera. Por eso prioricé la usabilidad sobre la estética. Aun así, es mi primer proyecto de UX/UI, y también el más grande que he hecho nunca (más de 11.000 líneas de código 😅). Si algo te cuesta, preparé un pequeño tutorial al que siempre puedes acudir en esta pestaña cuando lo necesites ♥.</p>
+            <p>No quiero alargarme mucho más. Solo quiero darte las gracias por estar aquí. Si esta app consigue que disfrutes de la música y te resulta fácil de usar, entonces todo el esfuerzo habrá valido la pena. Que la disfrutes, y que te vaya todo muy bien.</p>
+            <p><span class="pakura-orange">~Pakura</span></p>
+        </div>
+    </div>
+
+    <!-- Cabecera: botón secreto (corazón) + barra de tutorial -->
+    <header class="settings-header">
+        <!-- Botón secreto: abre el modal -->
+        <button id="secret-pakura-btn" class="secret-btn" aria-label="Abrir nota del creador">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Icono corazón">
+                <path d="M1.24264 8.24264 8 15l6.7574-6.75736c.7956-.79565 1.2426-1.87478 1.2426-3v-.1903C16 2.8143 14.1857 1 11.9477 1c-1.2311 0-2.39537.55959-3.16439 1.52086L8 3.5l-.78331-.97914C6.44767 1.55959 5.28338 1 4.05234 1 1.8143 1 0 2.8143 0 5.05234v.1903c0 1.12522.44699 2.20435 1.24264 3Z"/>
+            </svg>
+        </button>
+
+        <!-- Barra superior (tutorial) -->
+        <a href="https://youtu.be/ABZ1vZv3L90" target="_blank" class="tutorial-btn-redesigned" aria-label="Abrir tutorial en YouTube">
+            ¿Necesitas ayuda? Haz click aquí para ver el tutorial!
+        </a>
+    </header>
+
+    <!-- Grid principal: panel izquierdo y derecho -->
+    <div class="settings-grid">
+        <!-- Panel izquierdo: ajustes de recomendaciones -->
+        <section class="settings-panel" aria-labelledby="settings-recs">
+            <h2 id="settings-recs">Ajustes recomendaciones</h2>
+            <div class="setting-item">
+                <label>¿Qué sabe el recomendador sobre ti?</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="setting-send-library" name="prompt_include_favorites" aria-label="Enviar mi biblioteca">
+                        Las canciones que te gustan (enviar mi biblioteca).
+                    </label>
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="setting-send-feedback" name="prompt_include_history" aria-label="Enviar mis opiniones sobre recomendaciones">
+                        Mis opiniones sobre las recomendaciones (likes/dislikes).
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label for="setting-custom-prompt">¿Quieres que el recomendador sepa algo sobre ti?</label>
+                <textarea id="setting-custom-prompt" name="prompt_extra" rows="4" placeholder="Escribe lo que quieras que el recomendador recuerde..." aria-label="Texto adicional para el recomendador"></textarea>
+            </div>
+        </section>
+
+        <!-- Panel derecho: servicios vinculados -->
+        <section class="settings-panel" aria-labelledby="settings-services">
+            <h2 id="settings-services">Servicios vinculados</h2>
+            <div class="setting-item">
+                <label for="setting-gemini-key">Api de gemini (necesaria para el recomendador)</label>
+                <input type="password" id="setting-gemini-key" name="gemini_api_key" placeholder="Pega aquí tu key de gemini..." aria-label="Clave de la API de Gemini">
+            </div>
+            <div class="setting-item">
+                <label for="setting-discord-token">Token de discord (necesaria para usar discord)</label>
+                <input type="password" id="setting-discord-token" name="discord_token" placeholder="Pega aquí el token de tu bot de discord..." aria-label="Token del bot de Discord">
+            </div>
+            <div class="setting-item">
+                <label for="setting-discord-server-id">ID del server (necesaria para usar discord)</label>
+                <input type="text" id="setting-discord-server-id" name="discord_server_id" placeholder="Pega aquí el id del server al que quieres que el bot se una..." aria-label="ID del servidor de Discord">
+            </div>
+            <div class="info-text-group">
+                <p class="info-text">Puedes obtener una API gratuita simplemente creando una cuenta en Google AI Studio.</p>
+                <p class="info-text">El token de tu bot se genera desde el Portal de Desarrolladores de Discord, es totalmente gratis.</p>
+                <p class="info-text">Activa el modo desarrollador en los ajustes de Discord y copia el ID de tu servidor preferido con click derecho. ¡Pruébalo!</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Botón inferior (guardar cambios) -->
+    <div class="settings-actions">
+        <button id="save-settings-btn" class="primary-btn-redesigned" aria-label="Guardar los cambios">
+            ¡Haz click para guardar los cambios!
+        </button>
+    </div>
+</div>

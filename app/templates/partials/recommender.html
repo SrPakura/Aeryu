@@ -1,0 +1,30 @@
+<div id="recs-view-container" class="recs-view initial-state">
+
+    <div id="initial-prompt-container">
+        <h1 class="initial-prompt-title">
+            <span>¿Qué se te antoja escuchar hoy?</span>
+            <span>Tengo un montón de recomendaciones para ti.</span>
+        </h1>
+    </div>
+
+    <div class="recs-main-content">
+        <div id="chat-container">
+            <div id="chat-messages"></div>
+        </div>
+
+        <aside id="recommendations-sidebar">
+            <h2>Recomendaciones</h2>
+            <div id="recommendations-list"></div>
+        </aside>
+    </div>
+
+    <div id="chat-input-container">
+        <input type="text" id="chat-input" placeholder="Pídele recomendaciones a Aeryu...">
+        <button id="chat-send-btn" aria-label="Enviar mensaje">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+        </button>
+    </div>
+
+</div>
