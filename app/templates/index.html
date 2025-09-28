@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Música</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <aside class="sidebar">
+            
+            <nav class="main-nav">
+                <ul>
+                    <li>
+                        <!--
+                            CAMBIO 1: El aria-label.
+                            Le ponemos una "etiqueta invisible" para que los lectores
+                            de pantalla le digan al usuario: "Enlace: Ver mis canciones favoritas".
+                            Ahora, una persona ciega sabe perfectamente a dónde va.
+                        -->
+                        <a href="#songs" data-page="songs" aria-label="Ver mis canciones favoritas">
+                            <svg class="icon" viewBox="0 0 16 16">
+                                <path fill="currentColor" d="M1.24264 8.24264 8 15l6.7574-6.75736c.7956-.79565 1.2426-1.87478 1.2426-3v-.1903C16 2.8143 14.1857 1 11.9477 1c-1.2311 0-2.39537.55959-3.16439 1.52086L8 3.5l-.78331-.97914C6.44767 1.55959 5.28338 1 4.05234 1 1.8143 1 0 2.8143 0 5.05234v.1903c0 1.12522.44699 2.20435 1.24264 3Z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <!-- CAMBIO 1: Lo mismo para el descargador. -->
+                        <a href="#downloader" data-page="downloader" aria-label="Ir al descargador de música">
+                            <svg class="icon" viewBox="0 0 432.6 400">
+                                <path fill="currentColor" d="m327.82 114.38-184.21 52.4v161.41c0 39.6-32.4 71.81-71.81 71.81S0 367.8 0 328.19s32.2-71.6 71.8-71.6c16.6 0 31.6 5.8 43.8 15.2V94.98c0-29.4 17.8-52.2 46-59.8L277.22 3.57c23.4-6.4 43.2-4.2 57.2 6.6 14.2 10.6 21.2 28.6 21.2 53.4v242.37l1.25-1.25 49.88-44.88c5.92-5.92 15.51-5.92 21.42 0 5.91 5.92 5.91 15.51 0 21.42l-75.73 70.73c-1.49 1.49-3.22 2.61-5.06 3.35-1.69.68-3.54 1.07-5.47 1.09h-.38c-1.93-.02-3.78-.41-5.47-1.09-1.84-.74-3.57-1.85-5.06-3.35l-75.73-70.73c-5.91-5.92-5.91-15.51 0-21.42 5.92-5.92 15.51-5.92 21.42 0l49.88 44.88 1.25 1.25V114.38Zm89.64 255.33H265.99c-8.37 0-15.15 6.78-15.15 15.15s6.78 15.15 15.15 15.15h151.47c8.37 0 15.15-6.78 15.15-15.15s-6.78-15.15-15.15-15.15Z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <!-- CAMBIO 1: Y para el recomendador. -->
+                        <a href="#recommender" data-page="recommender" aria-label="Ir al recomendador de canciones">
+                            <svg class="icon icon-recommender" viewBox="0 0 432.6 400">
+                                <defs>
+                                    <linearGradient id="a" x1="26.48" x2="444.66" y1="171.78" y2="245.51" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#9168c0"/>
+                                        <stop offset=".39" stop-color="#5d81cf"/>
+                                        <stop offset=".8" stop-color="#2d98dd"/>
+                                        <stop offset="1" stop-color="#1ba1e3"/>
+                                    </linearGradient>
+                                </defs>
+                                <path fill="url(#a)" d="M422.6 295.22h-56.98c-5.52 0-10-4.48-10-10V63.58c0-24.8-7-42.8-21.2-53.4-14-10.8-33.8-13-57.2-6.6l-115.61 31.6c-28.2 7.6-46 30.4-46 59.8v176.81c-12.2-9.4-27.2-15.2-43.8-15.2-39.6 0-71.8 32.2-71.8 71.6S32.21 400 71.81 400s71.81-32.2 71.81-71.81V166.78l184.21-52.4v170.84c0 5.52-4.48 10-10 10h-56.98c-5.52 0-10 4.48-10 10v7.8c0 5.52 4.48 10 10 10h56.98c5.52 0 10 4.48 10 10V390c0 5.52 4.48 10 10 10h7.8c5.52 0 10-4.48 10-10v-56.98c0-5.52 4.48 10 10-10h56.98c5.52 0 10-4.48 10-10v-7.8c0-5.52-4.48-10-10-10Z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="music-player">
+                <div class="album-art-container" id="player-album-art-container">
+                    <img src="{{ url_for('static', filename='covers/default_cover.png') }}" alt="Portada del Álbum" class="album-art" id="player-album-art">
+                    <div class="play-pause-overlay">
+                        <svg viewBox="0 0 480 480" id="player-play-pause-icon">
+                            <path class="overlay-bg" d="M240,480c132.55,0,240-107.45,240-240S372.55,0,240,0,0,107.45,0,240s107.45,240,240,240Z"></path>
+                            <path class="overlay-icon" d="M321.93,265.42l-113.28,66.88c-18.23,10.77-40.64-3.25-40.64-25.42v-133.77c0-22.17,22.41-36.18,40.64-25.42l113.28,66.88c18.76,11.08,18.76,39.75,0,50.83Z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="song-details" style="text-align: center; margin-top: 15px; width: 100%;">
+                    <h3 id="player-title" style="font-size: 1.1em; margin: 0; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Selecciona una canción</h3>
+                    <p id="player-artist" style="font-size: 0.9em; margin: 0; color: var(--color-text-secondary);">...</p>
+                </div>
+
+                <div class="progress-bar-container" id="player-progress-container">
+                    <div class="progress-bar-fill" id="player-progress-fill" style="width: 0%;"></div>
+                </div>
+                <div class="time-display" style="width: 160px; display: flex; justify-content: space-between; font-size: 0.8em; color: var(--color-text-secondary); margin-top: 5px;">
+                    <span id="player-current-time">0:00</span>
+                    <span id="player-duration">0:00</span>
+                </div>
+
+                <div class="controls-grid" role="group" aria-label="Controles de reproducción">
+                    <button <button id="player-prev-btn" class="control-btn" title="Anterior" aria-label="Canción anterior">
+                        <svg viewBox="0 0 24 24"><g fill="currentColor" transform="scale(-1, 1) translate(-24, 0)"><path fill-rule="evenodd" d="M5.60439 4.23093C4.94586 3.73136 4 4.20105 4 5.02762V18.9724c0 .8266.94586 1.2962 1.60439.7967l9.19081-6.9724c.5275-.4002.5275-1.1932 0-1.5934L5.60439 4.23093ZM2 5.02762c0-2.47973 2.83758-3.88879 4.81316-2.39007L16.004 9.60993c1.5825 1.20047 1.5825 3.57967 0 4.78017l-9.19084 6.9724C4.83758 22.8612 2 21.4521 2 18.9724V5.02762Z" clip-rule="evenodd"></path><path d="M20 3c0-.55228.4477-1 1-1s1 .44772 1 1v18c0 .5523-.4477 1-1 1s-1-.4477-1-1V3Z"></path></g></svg>
+                    </button>
+                    <button id="player-next-btn" class="control-btn" title="Siguiente" aria-label="Siguiente canción">
+                        <svg viewBox="0 0 24 24"><g fill="currentColor"><path fill-rule="evenodd" d="M5.60439 4.23093C4.94586 3.73136 4 4.20105 4 5.02762V18.9724c0 .8266.94586 1.2962 1.60439.7967l9.19081-6.9724c.5275-.4002.5275-1.1932 0-1.5934L5.60439 4.23093ZM2 5.02762c0-2.47973 2.83758-3.88879 4.81316-2.39007L16.004 9.60993c1.5825 1.20047 1.5825 3.57967 0 4.78017l-9.19084 6.9724C4.83758 22.8612 2 21.4521 2 18.9724V5.02762Z" clip-rule="evenodd"></path><path d="M20 3c0-.55228.4477-1 1-1s1 .44772 1 1v18c0 .5523-.4477 1-1 1s-1-.4477-1-1V3Z"></path></g></svg>
+                    </button>
+                    <button id="player-repeat-btn" class="control-btn" title="Repetir" aria-label="Activar o desactivar repetición">
+                        <svg viewBox="0 0 24 24"><path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20.5001c4.6944 0 8.5-3.8056 8.5-8.5 0-2.82554-1.3787-5.32907-3.5-6.8746m-4 17.2746-2-2 2-2m-1-14.9c-4.69442 0-8.5 3.80558-8.5 8.5 0 2.8255 1.37867 5.3291 3.5 6.8746m4-13.2746 2-2-2-2"></path></svg>
+                    </button>
+                    <button id="player-shuffle-btn" class="control-btn" title="Aleatorio" aria-label="Activar o desactivar modo aleatorio">
+                        <svg viewBox="0 0 16 16"><path fill="currentColor" d="M14.943 1.463a.748.748 0 0 0-.161-.242l-.002-.001-.001-.002A.748.748 0 0 0 14.25 1h-4a.75.75 0 0 0 0 1.5h2.19L1.22 13.72a.75.75 0 1 0 1.06 1.06L13.5 3.56v2.19a.75.75 0 0 0 1.5 0v-4a.747.747 0 0 0-.057-.287zM9.5 14.25c0 .414.336.75.75.75h4a.747.747 0 0 0 .75-.75v-4a.75.75 0 0 0-1.5 0v2.19l-2.47-2.47a.75.75 0 1 0-1.06 1.06l2.47 2.47h-2.19a.75.75 0 0 0-.75.75zM6.03 4.97a.75.75 0 0 1-1.06 1.06L1.22 2.28a.75.75 0 0 1 1.06-1.06l3.75 3.75z"></path></svg>
+                    </button>
+                    <button id="player-discord-btn" class="control-btn" title="Discord Bot" aria-label="Conectar con el bot de Discord">
+                        <svg viewBox="0 -28.5 256 256"><path fill="currentColor" d="M216.856339 16.5966031C200.285002 8.84328665 182.566144 3.2084988 164.041564 0c-2.275041 4.11318106-4.93294 9.64549908-6.765465 14.0464379-19.692104-2.9614483-39.203132-2.9614483-58.5330827 0C96.9108417 9.64549908 94.1925838 4.11318106 91.8971895 0 73.3526068 3.2084988 55.6133949 8.86399117 39.0420583 16.6376612 5.61752293 67.146514-3.4433191 116.400813 1.08711069 164.955721c22.16890891 16.555194 43.65325271 26.611976 64.77502181 33.192855 5.2150826-7.17745 9.8662303-14.807241 13.8730814-22.848315-7.6311949-2.899686-14.9402415-6.478059-21.8464273-10.632298 1.8321746-1.357374 3.6243438-2.776511 5.3558032-4.236706 42.1228202 19.70193 87.8903382 19.70193 129.5099332 0 1.751813 1.460195 3.543631 2.879332 5.355803 4.236706-6.926539 4.174593-14.255589 7.752966-21.886784 10.653002 4.006851 8.02037 8.637996 15.670866 13.873082 22.847965 21.142122-6.580879 42.646399-16.637311 64.815325-33.213209 5.315798-56.28752-9.080862-105.0894778-38.05561-148.3591179ZM85.4738752 135.09489c-12.6448471 0-23.0146535-11.804735-23.0146535-26.179989 0-14.3752538 10.1483733-26.2003423 23.0146535-26.2003423 12.8666312 0 23.2360868 11.804384 23.0146538 26.2003423.020002 14.375254-10.1480226 26.179989-23.0146538 26.179989Zm85.0513618 0c-12.644847 0-23.014653-11.804735-23.014653-26.179989 0-14.3752538 10.148022-26.2003423 23.014653-26.2003423 12.866281 0 23.236087 11.804384 23.014654 26.2003423 0 14.375254-10.148373 26.179989-23.014654 26.179989Z"></path></svg>
+                    </button>
+                    <div class="volume-control-container">
+    <div class="volume-slider-container">
+        <input type="range" id="volume-slider" orient="vertical" min="0" max="100" value="100">
+    </div>
+    <button id="player-volume-btn" class="control-btn" title="Volumen" aria-label="Ajustar volumen">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15 21v-2c3.86 0 7-3.14 7-7s-3.14-7-7-7V3c4.96 0 9 4.04 9 9s-4.04 9-9 9zm0-4v-2c1.65 0 3-1.35 3-3s-1.35-3-3-3V7c2.76 0 5 2.24 5 5s-2.24 5-5 5zM1 12v4h5l6 5V3L6 8H1v4"></path></svg>
+    </button>
+</div>
+                </div>
+            </div>
+
+
+            <nav class="settings-nav">
+                <ul>
+                    <li>
+                        <!-- CAMBIO 1: El último, para los ajustes. -->
+                        <a href="#settings" data-page="settings" aria-label="Abrir panel de ajustes">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path fill="currentColor" fill-rule="evenodd" d="M14.2788 2.15224C13.9085 2 13.439 2 12.5 2s-1.4085 0-1.7788.15224c-.4938.20299-.88611.59234-1.09064 1.08239-.09337.22371-.12991.48387-.14421.86336-.02101.55769-.30919 1.0739-.79618 1.35294-.48699.27903-1.08153.26861-1.57868.00783-.33831-.17746-.5836-.27614-.8255-.30774-.5299-.06924-1.06581.07327-1.48983.39618-.31802.24218-.55277.6457-1.02226 1.45273-.46949.80704-.70423 1.21055-.75655 1.60498-.06977.52589.07383 1.05775.3992 1.47859.14851.1921.35722.3535.68115.5555.47621.297.78262.8029.78259 1.361-.00003.5581-.30643 1.0639-.78259 1.3608-.32398.2021-.53273.3636-.68125.5557-.32537.4208-.46896.9526-.3992 1.4785.05232.3944.28707.798.75655 1.605.46949.807.70424 1.2106 1.02226 1.4527.42402.3229.95993.4654 1.48983.3962.24189-.0316.48716-.1303.82544-.3077.49719-.2608 1.09177-.2712 1.57879.0078.48702.2791.77521.7953.79623 1.3531.0143.3794.05084.6396.14421.8633.20453.49.59684.8794 1.09064 1.0824C11.0915 22 11.561 22 12.5 22s1.4085 0 1.7788-.1522c.4938-.203.8861-.5924 1.0906-1.0824.0934-.2237.13-.4839.1443-.8634.021-.5577.3091-1.0739.7961-1.353.487-.2791 1.0816-.2686 1.5788-.0078.3383.1774.5835.276.8254.3076.5299.0693 1.0658-.0732 1.4898-.3961.3181-.2422.5528-.6457 1.0223-1.4528.4695-.807.7042-1.2105.7566-1.6049.0697-.5259-.0739-1.0578-.3992-1.4786-.1486-.1921-.3573-.3536-.6813-.5556-.4761-.2969-.7825-.8028-.7825-1.3609s.3064-1.0638.7825-1.3607c.3241-.2021.5328-.3635.6814-.5557.3253-.42077.4689-.95263.3992-1.47853-.0524-.39442-.2871-.79794-.7566-1.60497-.4695-.80703-.7042-1.21055-1.0223-1.45273-.424-.32291-.9599-.46542-1.4898-.39618-.2419.0316-.4872.13027-.8254.30771-.4972.26079-1.0918.27122-1.5788-.00784-.487-.27905-.7752-.7953-.7963-1.35302-.0143-.37946-.0508-.63961-.1442-.86331-.2045-.49005-.5968-.8794-1.0906-1.08239ZM12.5 15c1.6695 0 3.0228-1.3431 3.0228-3S14.1695 9 12.5 9c-1.6695 0-3.02284 1.3431-3.02284 3S10.8305 15 12.5 15Z" clip-rule="evenodd"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="content-area">
+            <!-- El contenido de las páginas parciales se cargará aquí -->
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}" type="module" defer></script>
+</body>
+</html>
