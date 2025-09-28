@@ -1,0 +1,7 @@
+/* app/static/css/songs.css */
+
+@import url('songs/modals.css');
+@import url('songs/cards.css');
+@import url('songs/lists.css');
+@import url('songs/stats.css');
+@import url('songs/layout.css');

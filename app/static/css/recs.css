@@ -1,0 +1,260 @@
+@import url('fonts.css');
+
+.recs-view {
+  font-family: 'Satoshi', sans-serif;
+}
+
+.recs-view h1,
+.recs-view h2,
+.recs-view h3 {
+  font-weight: 700;
+}
+.recs-view p {
+  font-weight: 400;
+}
+.recs-view em {
+  font-style: italic;
+}
+
+.recs-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 25px;
+    font-family: 'Satoshi', sans-serif;
+    gap: 25px;
+}
+
+.recs-main-content {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 25px;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.recs-view.initial-state .recs-main-content {
+    display: none;
+}
+.recs-view:not(.initial-state) #initial-prompt-container {
+    display: none;
+}
+
+#initial-prompt-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: opacity 0.5s ease-out;
+}
+.initial-prompt-title {
+    font-size: 2.8em;
+    font-weight: 700;
+    line-height: 1.4;
+    background: linear-gradient(90deg, #8F69C0, #1CA1E3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 0 15px 0 0;
+}
+#chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-bottom: 20px;
+    flex-grow: 1;
+}
+.chat-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    max-width: 75%;
+    opacity: 0;
+    transform: translateY(20px);
+}
+.chat-message.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.5s ease-out;
+}
+
+/* --- Typewriter --- */
+.typewriter-word {
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+.typewriter-word.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.chat-message .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--bg-light);
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.chat-message .message-bubble {
+    padding: 18px 22px;
+    border-radius: 25px;
+    background-color: var(--bg-medium);
+    line-height: 1.6;
+    font-size: 1.15em;
+    font-weight: 450;
+    white-space: pre-wrap; /* Respeta espacios y saltos de línea */
+}
+
+/* --- Espaciado extra en párrafos y listas --- */
+.chat-message .message-bubble p,
+.chat-message .message-bubble ul {
+    margin-bottom: 1em;
+}
+.chat-message .message-bubble > *:last-child {
+    margin-bottom: 0;
+}
+.chat-message .message-bubble ul {
+    padding-left: 25px;
+}
+
+.user-message {
+    align-self: flex-end;
+}
+.user-message .message-bubble {
+    border-top-right-radius: 8px;
+}
+.assistant-message {
+    align-self: flex-start;
+}
+.assistant-message .message-bubble {
+    border-top-left-radius: 8px;
+}
+
+.assistant-message .avatar {
+    background-image: url('../assets/default_gemini.png');
+}
+.user-message .avatar {
+    background-image: url('../assets/default_user.png');
+}
+
+#recommendations-sidebar {
+    width: 380px;
+    background-color: var(--bg-medium);
+    border-radius: var(--border-radius-main);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(110%);
+    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+#recommendations-sidebar.visible {
+    transform: translateX(0);
+}
+#recommendations-sidebar h2 {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+#recommendations-list {
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.recommendation-card {
+    background-color: var(--bg-light);
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.recommendation-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.recommendation-info .title {
+    font-weight: 700;
+    font-size: 1.05em;
+}
+.recommendation-info .artist {
+    font-size: 0.9em;
+    color: #a0a0a0;
+}
+
+.recommendation-actions {
+    display: flex;
+    gap: 8px;
+}
+.recommendation-actions .icon-btn {
+    background-color: var(--bg-accent-dark);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+.recommendation-actions .icon-btn svg {
+    width: 22px;
+    height: 22px;
+}
+.recommendation-actions .icon-btn:hover {
+    background-color: #4f4f4f;
+}
+
+#chat-input-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--bg-medium);
+    border-radius: 20px;
+    padding: 10px 15px 10px 25px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+#chat-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 1.1em;
+    outline: none;
+    padding: 10px 0;
+}
+#chat-input::placeholder {
+    color: #888;
+}
+#chat-send-btn {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    cursor: pointer;
+    padding: 5px;
+}
+#chat-send-btn svg {
+    width: 28px;
+    height: 28px;
+}

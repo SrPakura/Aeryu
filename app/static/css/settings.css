@@ -1,0 +1,268 @@
+/* --- Variables de color --- */
+:root {
+    --pakura-orange: #F28F52;
+    --pakura-cream: #FAEBE4;
+    --pakura-black: #1A1A1A;
+    --panel-gray: #2b2b2b;
+}
+
+/* --- Vista general --- */
+.settings-view.redesigned {
+    padding: 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* --- Header --- */
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Botón secreto (círculo con corazón) --- */
+.secret-btn {
+    width: 70px;   /* tamaño del círculo */
+    height: 70px;
+    background: var(--pakura-cream);
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.secret-btn svg {
+    width: 40px;   /* tamaño del corazón */
+    height: 40px;
+}
+.secret-btn svg path {
+    fill: var(--pakura-orange);
+}
+.secret-btn:hover {
+    transform: scale(1.05); /* solo zoom, sin cambiar color */
+}
+.secret-btn:hover svg path {
+    fill: #fff;
+}
+
+/* --- Barra superior (tutorial) --- */
+.tutorial-btn-redesigned {
+    display: block;
+    width: 96%;
+    margin: 20 auto;
+    padding: 22px;
+    font-size: 1.4em;
+    font-weight: 500;
+    background: var(--panel-gray);
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    text-align: center;
+}
+.tutorial-btn-redesigned:hover {
+    background: var(--pakura-orange);
+    color: #fff;
+}
+
+/* --- Grid de paneles --- */
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    flex-grow: 1;
+}
+.settings-panel {
+    background: var(--panel-gray);
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.settings-panel h2 {
+    font-size: 3em;
+    font-weight: 500;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    text-align: center; /* centrado del título */
+}
+
+/* --- Inputs & textarea --- */
+.settings-view.redesigned input[type="text"],
+.settings-view.redesigned input[type="password"],
+.settings-view.redesigned textarea {
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #fff;
+    font-size: 1.2em;
+    font-family: inherit;
+    outline: none;
+}
+.settings-view.redesigned input:focus,
+.settings-view.redesigned textarea:focus {
+    border-color: var(--pakura-orange);
+}
+.settings-view.redesigned textarea {
+    resize: vertical;
+    min-height: 560px;
+}
+
+/* --- Labels de los campos principales (preguntas) --- */
+.setting-item > label {
+    font-size: 2em;        /* tamaño de las preguntas principales */
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* --- Checkboxes --- */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.checkbox-wrapper {
+    font-size: 1.2rem;   /* ahora sí cambia el tamaño del texto */
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+.checkbox-wrapper input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+}
+/* Labels de los checkboxes */
+.settings-view.redesigned .checkbox-wrapper label {
+    font-size: 5em;   /* más pequeños que las preguntas principales */
+    font-weight: 800;
+    color: red;
+    cursor: pointer;
+}
+
+/* Contenedor del texto informativo */
+.info-text-group {
+    flex-grow: 1;                  /* ocupa todo el espacio vertical restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;       /* centra verticalmente dentro del panel */
+    text-align: center;            /* centra el texto horizontalmente */
+    gap: 12px;                     /* separación entre párrafos */
+    padding: 20px 10px;            /* márgenes internos */
+}
+
+/* --- Info text --- */
+.info-text {
+    font-size: 1.6em;
+    color: #aaa;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* --- Botón guardar --- */
+.settings-actions {
+    padding-top: 10px;
+}
+
+/* --- Barra inferior (Guardar) --- */
+.primary-btn-redesigned {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    padding: 22px;
+    font-size: 1.4em;
+    font-weight: 500;
+    background: var(--panel-gray);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.primary-btn-redesigned:hover {
+    background: var(--pakura-orange);
+    color: #fff;
+}
+
+/* --- Modal secreto --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal.hidden {
+    display: none; /* sigue funcionando el "secreto" */
+}
+
+/* Contenido del modal */
+.modal-content {
+    position: relative;
+    background: var(--pakura-cream); /* fondo crema */
+    color: var(--pakura-black);      /* texto negro suave */
+    padding: 40px;                   /* más aire */
+    border-radius: 18px;
+    max-width: 800px;                /* más grande */
+    max-height: 85vh;
+    overflow-y: auto;
+    font-family: 'Satoshi', sans-serif; /* fuente importada */
+    line-height: 1.6;
+}
+
+/* Título del modal */
+.modal-content h2 {
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+/* Párrafos dentro del modal */
+.modal-content p {
+    margin-bottom: 18px;
+    font-size: 1.2em;
+    font-weight: 400;
+}
+
+/* Texto destacado (ejemplo ~Pakura al final) */
+.modal-content .pakura-orange {
+    color: var(--pakura-orange);
+    font-weight: 600;
+}
+
+/* Botón de cierre */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    color: var(--pakura-black);
+}
+
+/* --- No voy a mentir, no se que esto xd ---*/
+
+.pakura-orange {
+    color: var(--pakura-orange);
+    font-weight: 600;
+}
