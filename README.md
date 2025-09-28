@@ -1,9 +1,9 @@
 <table>
   <tr>
-    <td width="160">
-      <img src="https://github.com/user-attachments/assets/1ccc97bc-d436-4be7-96e5-b0179866c781" alt="Aeryu Logo" width="140"/>
+    <td width="150" valign="middle">
+      <img src="https://github.com/user-attachments/assets/1ccc97bc-d436-4be7-96e5-b0179866c781" alt="Aeryu Logo" width="120"/>
     </td>
-    <td>
+    <td valign="middle">
       <h1>🎵 Aeryu</h1>
       <p><strong>La alternativa open-source al streaming musical comercial.</strong><br>
       Un reproductor de música <strong>local, privado y accesible</strong>, diseñado para ser usable incluso por personas con poca experiencia digital.</p>
