@@ -1,6 +1,6 @@
 <table>
   <tr>
-    <td width="150" valign="middle">
+    <td width="170" valign="middle">
       <img src="https://github.com/user-attachments/assets/1ccc97bc-d436-4be7-96e5-b0179866c781" alt="Aeryu Logo" width="200"/>
     </td>
     <td valign="middle">
